@@ -1,0 +1,120 @@
+import nltk
+import random
+import json
+import pickle
+from nltk.stem.lancaster import LancasterStemmer
+import numpy
+import tflearn
+import tensorflow
+from flask import Flask, render_template, request, redirect, url_for
+
+stemmer = LancasterStemmer()
+
+
+with open("intents.json") as file:
+    data = json.load(file)
+
+words = []
+labels = []
+docs_x = []
+docs_y = []
+
+for intent in data["intents"]:
+    for pattern in intent["patterns"]:
+        wrds = nltk.word_tokenize(pattern)
+        words.extend(wrds)
+        docs_x.append(wrds)
+        docs_y.append(intent["tag"])
+
+    if intent["tag"] not in labels:
+        labels.append(intent["tag"])
+
+words = [stemmer.stem(w.lower()) for w in words if w != "?"]
+words = sorted(list(set(words)))
+
+labels = sorted(labels)
+
+training = []
+output = []
+
+out_empty = [0 for _ in range(len(labels))]
+
+for x, doc in enumerate(docs_x):
+    bag = []
+
+    wrds = [stemmer.stem(w.lower()) for w in doc]
+
+    for w in words:
+        if w in wrds:
+            bag.append(1)
+        else:
+            bag.append(0)
+
+    output_row = out_empty[:]
+    output_row[labels.index(docs_y[x])] = 1
+
+    training.append(bag)
+    output.append(output_row)
+
+
+training = numpy.array(training)
+output = numpy.array(output)
+
+
+
+net = tflearn.input_data(shape=[None, len(training[0])])
+net = tflearn.fully_connected(net, 8)
+net = tflearn.fully_connected(net, 8)
+net = tflearn.fully_connected(net, len(output[0]), activation="softmax")
+net = tflearn.regression(net)
+
+model = tflearn.DNN(net)
+
+
+try:
+    model = tensorflow.keras.models.load_model('model.tflearn')
+except:
+    model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
+    model.save("model.tflearn")
+
+
+def bag_of_words(sentence, words):
+    bag = [0 for _ in range(len(words))]
+
+    tokenized_sentence = nltk.word_tokenize(sentence)
+    tokenized_sentence = [stemmer.stem(word.lower()) for word in tokenized_sentence]
+
+    for s in tokenized_sentence:
+        for i, w in enumerate(words):
+            if w == s:
+                bag[i] = 1
+            
+    return numpy.array(bag)
+
+def make_prediction(inp):
+    results = model.predict([bag_of_words(inp, words)])
+    results_index = numpy.argmax(results)
+    tag = labels[results_index]
+
+    for tg in data["intents"]:
+        if tg['tag'] == tag:
+            responses = tg['responses']
+
+    return(random.choice(responses))
+
+def chat():
+    while True:
+        inp = input("You: ")
+        if inp.lower() == "quit":
+            break
+
+        results = model.predict([bag_of_words(inp, words)])
+        results_index = numpy.argmax(results)
+        tag = labels[results_index]
+
+        for tg in data["intents"]:
+            if tg['tag'] == tag:
+                responses = tg['responses']
+
+        print(random.choice(responses))
+

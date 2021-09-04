@@ -1,0 +1,31 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up"],
+         "responses": ["Hello! What is troubling you today?", "Hi there, how can I help and what seems to be your problem?"]
+        },
+        {"tag": "goodbye",
+         "patterns": ["See you later", "Goodbye", "I am Leaving", "bye", "bye bye", "Bye"],
+         "responses": ["Sad to see you go :(, hope I was able to help you!", "Talk to you later, take care of yourself!", "Goodbye! Stay Safe!"]
+        },
+        {"tag": "eating_disorder",
+         "patterns": ["can't stomach food", "keep vomiting", "purging", "binge eating", "can't make myself eat", "I am eating to litte", "I am eating too much"],
+         "responses": ["Try take small bites of food, and healthier options work better. Or foods that are bland such as bread and saltine crackers :)", "A good way to help keep yourself in check is too let some of your good friends know, they will be able to keep you in check and accountable", "Have you considered seeing a therapist if that is possible?", "Take a look at this website to understand your disorder better: https://www.healthline.com/nutrition/common-eating-disorders", "This website offers support groups for EDs: https://www.eatingdisorderhope.com/recovery/support-groups"]
+        },
+        {"tag": "name",
+         "patterns": ["what is your name", "what should I call you", "whats your name?"],
+         "responses": ["You can call me CV Bot.", "I'm CV Bot!"]
+        },
+        {"tag": "stress",
+        "patterns": ["stress", "stressed", "can't focus", "bad eating habits", "can't sleep", "panic attack", "panic attacks", "aches", "headache", "headaches", "stomach ache", "exausted", "anxious"],
+        "responses": ["Try meditation", "Can you reach out to friends?", "Take a look at this website to see ways to manage stress: https://my.clevelandclinic.org/health/articles/11874-stress", "Try a meditation app like Aura", "Try these meditation techniques: https://www.mayoclinic.org/tests-procedures/meditation/in-depth/meditation/art-20045858 or https://www.verywellmind.com/practice-basic-meditation-for-stress-management-3144789"]
+        },
+        {"tag": "school",
+         "patterns": ["too much work", "overworked", "homework", "assignments", "too many deadlines"],
+         "responses": ["Can your friends or family help?", "Consider asking for extensions if possible", "Here are some websites that can help you witb school work: https://www.familyeducation.com/school/top-10-free-homework-help-websites", "Try these meditation techniques: https://www.mayoclinic.org/tests-procedures/meditation/in-depth/meditation/art-20045858 or https://www.verywellmind.com/practice-basic-meditation-for-stress-management-3144789", "Take a look at this website to see ways to manage stress: https://my.clevelandclinic.org/health/articles/11874-stress", "Priortize your health and yourself before everything else, a few grades aren't worth your mental and physical health.", "Mistakes and failures are part of the process, no one suceeds without setbacks"]
+        },
+        {"tag": "unmotivated",
+        "patterns": ["I cannot focus", "can't focus", "don't want to work", "can't work for long", "easily distracted", "can't pay attention", "distractions", "don't have motivation", "no motivation"],
+        "responses": ["Sometimes the best thing you can do for this type of problem is treat yourself to a break! Take a few hours off, relax, and have fun :)", "Remeber how important the task is and think backwards, how will this impact your grades and appearance to others?", "Take a look at this website to see causes of a lack of motivation, to help you understand your problem: https://www.betterhelp.com/advice/motivation/common-causes-of-lack-of-motivation-and-how-to-overcome-them/", "A good way to overcome this is too make a small list of easy to-do things and try to complete the list by the end of the day. Remeber to tick each one off, it will give you a great sense of achievement! :)"]
+        } 
+   ]
+}
